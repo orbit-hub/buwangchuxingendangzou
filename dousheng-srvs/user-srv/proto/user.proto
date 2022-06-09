@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = ".;proto";
+
+service User{
+  rpc GetUserInfo(IdRequest) returns (UserListResponse); // 用户信息
+  rpc CreateUser(CreateUserInfo) returns (UserInfoResponse); // 添加用户
+  rpc CheckPassWord(PasswordCheckInfo) returns (CheckResponse); //检查密码
+}
+
+message PasswordCheckInfo {
+  string password = 1;
+  string encryptedPassword = 2;
+}
+
+
+message CheckResponse{
+  bool success = 1;
+}
+
+message CreateUserInfo{
+  string name = 1;
+  string passWord = 2;
+  string nickName = 3;
+}
+
+
+message IdRequest {
+  uint32 id = 1;
+}
+
+message UserListResponse {
+  repeated UserInfoResponse data = 1;
+}
+
+message UserInfoResponse {
+  uint32 id = 1;
+  string name = 2;
+  int64 FollowCount = 3;
+  int64 FollowerCount = 4;
+  bool IsFollow = 5;
+}
