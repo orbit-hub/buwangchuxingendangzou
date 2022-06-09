@@ -1,0 +1,18 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = ".;proto";
+
+service User{
+  rpc feed(google.protobuf.Empty) returns (VideoListResponse); // 用户信息
+
+}
+
+message VideoListResponse {
+  uint32 Id  = 1 ;
+  string PlayUrl = 2 ;
+  string CoverUrl = 3 ;
+  int64 FavoriteCount = 4 ;
+  int64  CommentCount = 5 ;
+  string title = 6 ;
+}
+
