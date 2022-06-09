@@ -41,6 +41,16 @@ func (s *UserServer) GetUserInfo(c context.Context, req *proto.IdRequest) (*prot
 	return rsp, nil
 }
 
+func (s *UserServer) GetUserByName(c context.Context, req *proto.NameRequest) (*proto.UserInfoResponse, error) {
+	var user model.User
+	result := global.DB.Where("name = ?", req.Name).First(&user)
+	if result.Error != nil {
+		return nil, status.Errorf(codes.NotFound, "用户不存在")
+	}
+	userInfoRsp := ModelToRsponse(user)
+	return &userInfoRsp, nil
+}
+
 func (s *UserServer) CreateUser(c context.Context, req *proto.CreateUserInfo) (*proto.UserInfoResponse, error) {
 	//新建用户
 	var user model.User

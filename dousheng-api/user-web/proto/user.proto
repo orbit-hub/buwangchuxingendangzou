@@ -6,11 +6,11 @@ service User{
   rpc GetUserByName(NameRequest) returns (UserInfoResponse);
   rpc CreateUser(CreateUserInfo) returns (UserInfoResponse); // 添加用户
   rpc CheckPassWord(PasswordCheckInfo) returns (CheckResponse); //检查密码
+
 }
 message NameRequest{
   string Name =1;
 }
-
 message PasswordCheckInfo {
   string password = 1;
   string encryptedPassword = 2;
