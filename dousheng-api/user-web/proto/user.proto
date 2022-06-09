@@ -9,7 +9,7 @@ service User{
 
 }
 message NameRequest{
-  string Name =1;
+  string Name = 1 ;
 }
 message PasswordCheckInfo {
   string password = 1;
@@ -39,6 +39,8 @@ message UserListResponse {
 message UserInfoResponse {
   uint32 id = 1;
   string name = 2;
+  string NickName = 7;
+  string Password = 6;
   int64 FollowCount = 3;
   int64 FollowerCount = 4;
   bool IsFollow = 5;

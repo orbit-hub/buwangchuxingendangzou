@@ -22,6 +22,8 @@ func ModelToRsponse(user model.User) proto.UserInfoResponse {
 	userInfoRsp := proto.UserInfoResponse{
 		Id:            uint32(user.ID),
 		Name:          user.Name,
+		Password:      user.Password,
+		NickName:      user.NickName,
 		FollowerCount: user.FollowerCount,
 		FollowCount:   user.FollowCount,
 		IsFollow:      true,
