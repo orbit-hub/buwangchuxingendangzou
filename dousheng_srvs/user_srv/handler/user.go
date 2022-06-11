@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"bwcxgdz/v2/user-srv/global"
-	"bwcxgdz/v2/user-srv/model"
-	"bwcxgdz/v2/user-srv/proto"
+	"bwcxgdz/v2/user_srv/global"
+	"bwcxgdz/v2/user_srv/model"
+	"bwcxgdz/v2/user_srv/proto"
 	"context"
 	"crypto/sha512"
 	"fmt"
@@ -53,7 +53,7 @@ func (s *UserServer) GetUserByName(c context.Context, req *proto.NameRequest) (*
 	return &userInfoRsp, nil
 }
 
-func (s *UserServer) CreateUser(c context.Context, req *proto.CreateUserInfo) (*proto.UserInfoResponse, error) {
+func (s *UserServer) CreateUser(c context.Context, req *proto.CreateUserInfoRequest) (*proto.UserInfoResponse, error) {
 	//新建用户
 	var user model.User
 	result := global.DB.Where(&model.User{Name: req.Name}).First(&user)
@@ -77,7 +77,7 @@ func (s *UserServer) CreateUser(c context.Context, req *proto.CreateUserInfo) (*
 	return &userInfoRsp, nil
 }
 
-func (s *UserServer) CheckPassWord(c context.Context, req *proto.PasswordCheckInfo) (*proto.CheckResponse, error) {
+func (s *UserServer) CheckPassWord(c context.Context, req *proto.PasswordCheckInfoRequest) (*proto.CheckResponse, error) {
 	//校验密码
 	options := &password.Options{16, 100, 32, sha512.New}
 	passwordInfo := strings.Split(req.EncryptedPassword, "$")

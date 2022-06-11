@@ -1,0 +1,25 @@
+syntax = "proto3";
+option go_package = ".;proto";
+
+service relation {
+    rpc RelationAction(RelationActionRequest) returns (ActionResponse);
+    rpc GetFollowList(IdRequest) returns (UserIdListResponse);
+    rpc GetFollowerList(IdRequest) returns (UserIdListResponse);
+}
+message IdRequest{
+  uint32 id = 1 ;
+}
+
+message UserIdListResponse{
+  repeated uint32 userIdList = 1;
+}
+
+message RelationActionRequest{
+  uint32 id = 1;
+  uint32 followId = 2;
+  int32 actionType = 3;
+}
+
+message ActionResponse{
+  bool success = 1;
+}

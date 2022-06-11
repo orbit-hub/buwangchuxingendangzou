@@ -139,7 +139,7 @@ func Login(c *gin.Context) {
 		HandleGrpcErrorToHttp(err, c)
 		return
 	}
-	if passRsp, pasErr := userSrvClient.CheckPassWord(context.Background(), &proto.PasswordCheckInfo{
+	if passRsp, pasErr := userSrvClient.CheckPassWord(context.Background(), &proto.PasswordCheckInfoRequest{
 		Password:          password,
 		EncryptedPassword: rsp.Password,
 	}); pasErr != nil {
@@ -202,7 +202,7 @@ func Register(c *gin.Context) {
 	}
 	//调用接口
 	userSrvClient := proto.NewUserClient(userConn)
-	rsp, err := userSrvClient.CreateUser(context.Background(), &proto.CreateUserInfo{
+	rsp, err := userSrvClient.CreateUser(context.Background(), &proto.CreateUserInfoRequest{
 		Name:     username,
 		PassWord: password,
 	})

@@ -1,0 +1,42 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = ".;proto";
+
+service User{
+  rpc feed(google.protobuf.Empty) returns (VideoListResponse); //视频流
+  rpc GetVideoInfoById(IdRequest) returns (VideoInfoResponse); //通过id获取视频信息
+  rpc Publish(VideoInfoRequest) returns (PublishResponse);
+  rpc PublishVideoList(IdRequest) returns (VideoListResponse);
+}
+
+message IdRequest{
+  uint32 id = 1 ;
+}
+
+message VideoInfoRequest{
+  uint32 userId  = 1 ;
+  string playUrl = 2 ;
+  string coverUrl = 3 ;
+  int64 favoriteCount = 4 ;
+  int64  commentCount = 5 ;
+  string title = 7 ;
+}
+
+message PublishResponse{
+  bool success = 1;
+}
+
+message VideoListResponse {
+  repeated VideoInfoResponse videoList = 1 ;
+}
+
+message VideoInfoResponse {
+  uint32 id  = 1 ;
+  string playUrl = 2 ;
+  string coverUrl = 3 ;
+  int64 favoriteCount = 4 ;
+  int64  commentCount = 5 ;
+  bool isFavorite = 6 ;
+  string title = 7 ;
+}
+

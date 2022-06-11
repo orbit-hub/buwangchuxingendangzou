@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+option go_package = ".;proto";
+
+service comment {
+    rpc GetCommentListById(VideoIdRequest) returns (CommentListResponse);
+    rpc CommentAction(ActionRequest) returns (ActionResponse);
+}
+message VideoIdRequest{
+  uint32 id = 1 ;
+}
+message ActionResponse{
+  bool success = 1;
+}
+message ActionRequest{
+  uint32 userId = 1;
+  uint32 videoID = 2;
+  string commentText = 3;
+  int32 actionType = 4;
+  uint32 commentId = 5;
+}
+
+message CommentListResponse{
+  repeated CommentInfoResponse data = 1;
+}
+
+message CommentInfoResponse {
+  uint32 id = 1;
+  uint32 userId = 2;
+  string content = 3;
+  google.protobuf.Timestamp createDate = 4;
+}

@@ -24,8 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type UserClient interface {
 	GetUserInfo(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*UserListResponse, error)
 	GetUserByName(ctx context.Context, in *NameRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
-	CreateUser(ctx context.Context, in *CreateUserInfo, opts ...grpc.CallOption) (*UserInfoResponse, error)
-	CheckPassWord(ctx context.Context, in *PasswordCheckInfo, opts ...grpc.CallOption) (*CheckResponse, error)
+	CreateUser(ctx context.Context, in *CreateUserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
+	CheckPassWord(ctx context.Context, in *PasswordCheckInfoRequest, opts ...grpc.CallOption) (*CheckResponse, error)
 }
 
 type userClient struct {
@@ -54,7 +54,7 @@ func (c *userClient) GetUserByName(ctx context.Context, in *NameRequest, opts ..
 	return out, nil
 }
 
-func (c *userClient) CreateUser(ctx context.Context, in *CreateUserInfo, opts ...grpc.CallOption) (*UserInfoResponse, error) {
+func (c *userClient) CreateUser(ctx context.Context, in *CreateUserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error) {
 	out := new(UserInfoResponse)
 	err := c.cc.Invoke(ctx, "/User/CreateUser", in, out, opts...)
 	if err != nil {
@@ -63,7 +63,7 @@ func (c *userClient) CreateUser(ctx context.Context, in *CreateUserInfo, opts ..
 	return out, nil
 }
 
-func (c *userClient) CheckPassWord(ctx context.Context, in *PasswordCheckInfo, opts ...grpc.CallOption) (*CheckResponse, error) {
+func (c *userClient) CheckPassWord(ctx context.Context, in *PasswordCheckInfoRequest, opts ...grpc.CallOption) (*CheckResponse, error) {
 	out := new(CheckResponse)
 	err := c.cc.Invoke(ctx, "/User/CheckPassWord", in, out, opts...)
 	if err != nil {
@@ -78,8 +78,8 @@ func (c *userClient) CheckPassWord(ctx context.Context, in *PasswordCheckInfo, o
 type UserServer interface {
 	GetUserInfo(context.Context, *IdRequest) (*UserListResponse, error)
 	GetUserByName(context.Context, *NameRequest) (*UserInfoResponse, error)
-	CreateUser(context.Context, *CreateUserInfo) (*UserInfoResponse, error)
-	CheckPassWord(context.Context, *PasswordCheckInfo) (*CheckResponse, error)
+	CreateUser(context.Context, *CreateUserInfoRequest) (*UserInfoResponse, error)
+	CheckPassWord(context.Context, *PasswordCheckInfoRequest) (*CheckResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -93,10 +93,10 @@ func (UnimplementedUserServer) GetUserInfo(context.Context, *IdRequest) (*UserLi
 func (UnimplementedUserServer) GetUserByName(context.Context, *NameRequest) (*UserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByName not implemented")
 }
-func (UnimplementedUserServer) CreateUser(context.Context, *CreateUserInfo) (*UserInfoResponse, error) {
+func (UnimplementedUserServer) CreateUser(context.Context, *CreateUserInfoRequest) (*UserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedUserServer) CheckPassWord(context.Context, *PasswordCheckInfo) (*CheckResponse, error) {
+func (UnimplementedUserServer) CheckPassWord(context.Context, *PasswordCheckInfoRequest) (*CheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPassWord not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
@@ -149,7 +149,7 @@ func _User_GetUserByName_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _User_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserInfo)
+	in := new(CreateUserInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -161,13 +161,13 @@ func _User_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/User/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CreateUser(ctx, req.(*CreateUserInfo))
+		return srv.(UserServer).CreateUser(ctx, req.(*CreateUserInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _User_CheckPassWord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PasswordCheckInfo)
+	in := new(PasswordCheckInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func _User_CheckPassWord_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/User/CheckPassWord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CheckPassWord(ctx, req.(*PasswordCheckInfo))
+		return srv.(UserServer).CheckPassWord(ctx, req.(*PasswordCheckInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
